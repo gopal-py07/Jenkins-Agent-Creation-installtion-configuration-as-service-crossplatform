@@ -1,0 +1,96 @@
+2024-10-22 14:06:40,405 - ERROR - Configuration file agent_config.json not found.
+2024-10-22 14:06:55,548 - ERROR - Unexpected response while checking agent existence. Status code: 403
+2024-10-22 14:10:49,505 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080//crumbIssuer/api/json
+2024-10-22 14:11:59,641 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:12:43,139 - ERROR - Unexpected response while checking agent existence. Status code: 403
+2024-10-22 14:15:19,074 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:16:32,620 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:16:55,582 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:17:09,470 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:20:59,809 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:21:25,161 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:30:09,142 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:34:11,001 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:36:46,133 - ERROR - Error retrieving CSRF token: 403 Client Error: Forbidden for url: http://172.27.231.128:8080/crumbIssuer/api/json
+2024-10-22 14:38:27,716 - INFO - Agent 'linux-agent' does not exist. Proceeding with creation.
+2024-10-22 14:38:27,740 - ERROR - Error creating agent: 400 Client Error: Bad Request for url: http://172.27.231.128:8080/computer/doCreateItem?name=linux-agent&type=hudson.slaves.DumbSlave
+2024-10-22 14:40:20,455 - INFO - Agent 'linux-agent' does not exist. Proceeding with creation.
+2024-10-22 14:40:20,543 - INFO - Agent 'linux-agent' created successfully.
+2024-10-22 14:42:33,044 - INFO - Agent 'linux-agent' does not exist. Proceeding with creation.
+2024-10-22 14:42:33,099 - INFO - Agent 'linux-agent' created successfully.
+2024-10-22 14:43:51,781 - INFO - Agent 'linux-agent' already exists.
+2024-10-22 14:44:20,332 - INFO - Agent 'linux-agent' does not exist. Proceeding with creation.
+2024-10-22 14:44:20,385 - INFO - Agent 'linux-agent' created successfully.
+2024-10-22 14:54:37,316 - INFO - Agent 'linux-agent' already exists.
+2024-10-22 14:56:09,827 - INFO - Agent 'linux-agent' already exists.
+2024-10-22 14:56:09,843 - ERROR - Error creating directory /home/jenkins: [Errno 13] Permission denied: '/home/jenkins'
+2024-10-22 14:56:48,056 - INFO - Agent 'linux-agent' already exists.
+2024-10-22 14:57:56,826 - INFO - Agent 'linux-agent-new' does not exist. Proceeding with creation.
+2024-10-22 14:57:56,889 - INFO - Agent 'linux-agent-new' created successfully.
+2024-10-22 15:02:36,402 - INFO - Agent 'linux-agent' already exists.
+2024-10-22 15:02:53,372 - INFO - Agent 'linux-agent' already exists.
+2024-10-22 15:04:42,376 - INFO - Agent 'linux-agent-latest' does not exist. Proceeding with creation.
+2024-10-22 15:04:42,439 - INFO - Agent 'linux-agent-latest' created successfully.
+2024-10-22 15:11:56,155 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 15:12:39,398 - INFO - Agent 'linux-agent-latest' does not exist. Proceeding with creation.
+2024-10-22 15:12:39,453 - INFO - Agent 'linux-agent-latest' created successfully.
+2024-10-22 15:13:55,772 - INFO - Agent 'linux-agent-latest' does not exist. Proceeding with creation.
+2024-10-22 15:13:55,834 - INFO - Agent 'linux-agent-latest' created successfully.
+2024-10-22 15:14:44,116 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 15:15:06,874 - INFO - Agent 'linux-agent-latest' does not exist. Proceeding with creation.
+2024-10-22 15:15:06,923 - INFO - Agent 'linux-agent-latest' created successfully.
+2024-10-22 15:16:50,334 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 15:17:15,774 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 15:17:39,896 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 15:18:33,946 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 15:18:50,376 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 15:19:58,326 - INFO - Agent 'linux-agent-latest-1' does not exist. Proceeding with creation.
+2024-10-22 15:19:58,387 - INFO - Agent 'linux-agent-latest-1' created successfully.
+2024-10-22 15:34:16,607 - INFO - Agent 'linux-agent-latest-1' already exists.
+2024-10-22 15:38:26,929 - INFO - Agent 'linux-agent-latest-1' already exists.
+2024-10-22 15:50:33,086 - INFO - Agent 'linux-agent-latest-1' already exists.
+2024-10-22 15:51:09,957 - INFO - Agent 'linux-agent-latest-2' does not exist. Proceeding with creation.
+2024-10-22 15:51:10,012 - INFO - Agent 'linux-agent-latest-2' created successfully.
+2024-10-22 15:59:53,437 - INFO - Agent 'linux-agent-latest-2' already exists.
+2024-10-22 16:00:40,327 - INFO - Agent 'linux-agent-latest-3' does not exist. Proceeding with creation.
+2024-10-22 16:00:40,383 - INFO - Agent 'linux-agent-latest-3' created successfully.
+2024-10-22 16:11:23,512 - INFO - Agent 'linux-agent-latest-4' does not exist. Proceeding with creation.
+2024-10-22 16:11:43,699 - INFO - Agent 'linux-agent-latest-4' does not exist. Proceeding with creation.
+2024-10-22 16:11:43,759 - INFO - Agent 'linux-agent-latest-4' created successfully.
+2024-10-22 16:12:35,924 - INFO - Agent 'linux-agent-latest-4' does not exist. Proceeding with creation.
+2024-10-22 16:12:35,978 - INFO - Agent 'linux-agent-latest-4' created successfully.
+2024-10-22 16:14:44,436 - INFO - Agent 'linux-agent-latest-4' already exists.
+2024-10-22 16:19:42,817 - INFO - Agent 'linux-agent-latest-5' does not exist. Proceeding with creation.
+2024-10-22 16:19:42,874 - INFO - Agent 'linux-agent-latest-5' created successfully.
+2024-10-22 16:23:40,588 - INFO - Agent 'linux-agent-latest-5' already exists.
+2024-10-22 16:57:28,876 - INFO - Agent 'linux-agent-latest-5' already exists.
+2024-10-22 16:57:29,435 - INFO - The Jenkins agent service 'linux-agent-latest-5' is running normally.
+2024-10-22 17:00:06,992 - INFO - Agent 'linux-agent-latest' does not exist. Proceeding with creation.
+2024-10-22 17:00:07,061 - INFO - Agent 'linux-agent-latest' created successfully.
+2024-10-22 17:00:07,611 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:02:59,902 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:03:00,471 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:03:48,643 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:03:49,098 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:07:38,848 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:07:39,384 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:07:39,384 - ERROR - Failed to monitor the service: name 'time' is not defined
+2024-10-22 17:07:51,477 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:07:51,904 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:08:51,959 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:09:27,460 - ERROR - Script interrupted by user.
+2024-10-22 17:09:28,897 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:09:29,297 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:10:29,392 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:11:29,448 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:12:29,507 - ERROR - Failed to monitor the service: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+2024-10-22 17:14:17,834 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:14:18,325 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:15:18,371 - ERROR - Failed to monitor the service: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+2024-10-22 17:16:50,899 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:16:51,439 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:17:11,465 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:17:31,490 - ERROR - Failed to monitor the service: int() argument must be a string, a bytes-like object or a number, not 'NoneType'
+2024-10-22 17:19:31,468 - INFO - Agent 'linux-agent-latest' already exists.
+2024-10-22 17:19:31,919 - INFO - The Jenkins agent service 'linux-agent-latest' is running normally.
+2024-10-22 17:20:11,976 - ERROR - Failed to send email alert: [Errno -3] Temporary failure in name resolution

@@ -1,0 +1,22 @@
+{
+  "name": "{agent_name}",
+  "nodeDescription": "Created by REST API",
+  "numExecutors": 1,
+  "remoteFS": "{remote_fs}",
+  "labelString": "{label}",
+  "mode": "NORMAL",
+  "retentionStrategy": {
+    "stapler-class": "hudson.slaves.RetentionStrategy$Always"
+  },
+  "launcher": {
+    "stapler-class": "hudson.slaves.JNLPLauncher",
+    "workDirSettings": {
+      "disabled": false,
+      "internalDir": "remoting",
+      "failIfWorkDirIsMissing": false
+    }
+  },
+  "nodeProperties": {
+    "stapler-class-bag": "true"
+  }
+}
