@@ -30,7 +30,7 @@ def parse_arguments():
     parser.add_argument('--remote_fs', required=True, help="Remote file system path for the agent")
     parser.add_argument('--label', default="", help="Labels assigned to the agent (optional)")
     parser.add_argument('--executors', type=int, default=1, help="Number of executors for the agent (optional)")
-    parser.add_argument('--config_file', required=True, help="Path to the JSON configuration file")
+    #parser.add_argument('--config_file', required=True, help="Path to the JSON configuration file")
     return parser.parse_args()
 
 def get_headers(csrf_token=None):
@@ -73,82 +73,8 @@ def check_agent_exists(jenkins_url, agent_name, headers, auth):
         logging.error(f"Error checking if agent exists: {e}")
         raise SystemExit(f"Error checking if agent exists: {e}")
 
-def send_email(subject, body):
-    """Send an email alert."""
-    email_from = os.getenv('EMAIL_FROM')
-    email_to = os.getenv('EMAIL_TO')
-    smtp_server = os.getenv('SMTP_SERVER')
-    smtp_port = int(os.getenv('SMTP_PORT'))
-    smtp_user = os.getenv('SMTP_USER')
-    smtp_password = os.getenv('SMTP_PASSWORD')
 
-    msg = MIMEMultipart()
-    msg['From'] = email_from
-    msg['To'] = email_to
-    msg['Subject'] = subject
-
-    msg.attach(MIMEText(body, 'plain'))
-
-    try:
-        server = smtplib.SMTP(smtp_server, smtp_port)
-        server.starttls()
-        server.login(smtp_user, smtp_password)
-        server.sendmail(email_from, email_to, msg.as_string())
-        server.quit()
-        print(f"Alert email sent to {email_to}")
-    except Exception as e:
-        logging.error(f"Failed to send email alert: {e}")
-        raise SystemExit(f"Error sending email: {e}")
-
-def monitor_service(agent_name):
-    """Continuously monitor Jenkins agent service and send email if service fails."""
-    current_platform = platform.system()
-    service_status_cmd = []
-
-    if current_platform == "Linux":
-        service_status_cmd = ["systemctl", "is-active", f"{agent_name}.service"]
-    elif current_platform == "Windows":
-        service_status_cmd = ["sc", "query", agent_name]
-
-    try:
-        while True:
-            result = subprocess.run(service_status_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            if result.returncode != 0:
-                subject = f"Service Failure: {agent_name}"
-                body = f"The Jenkins agent service '{agent_name}' has failed or stopped unexpectedly."
-                send_email(subject, body)
-            else:
-                logging.info(f"The Jenkins agent service '{agent_name}' is running normally.")
-                print(f"The Jenkins agent service '{agent_name}' is running normally.")
-            
-            time.sleep(20)  # Wait for the specified interval before checking again
-    except Exception as e:
-        logging.error(f"Failed to monitor the service: {e}")
-        raise SystemExit(f"Error monitoring service: {e}")
-
-# def monitor_service(agent_name):
-#     """Monitor Jenkins agent service and send email if service fails."""
-#     current_platform = platform.system()
-#     service_status_cmd = []
-
-#     if current_platform == "Linux":
-#         service_status_cmd = ["systemctl", "is-active", f"{agent_name}.service"]
-#     elif current_platform == "Windows":
-#         service_status_cmd = ["sc", "query", agent_name]
-
-#     try:
-#         result = subprocess.run(service_status_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-#         print(result.returncode)
-#         if result.returncode != 0:
-#             subject = f"Service Failure: {agent_name}"
-#             body = f"The Jenkins agent service '{agent_name}' has failed or stopped unexpectedly."
-#             send_email(subject, body)
-#         else:
-#             logging.info(f"The Jenkins agent service '{agent_name}' is running normally.")
-#     except Exception as e:
-#         logging.error(f"Failed to monitor the service: {e}")
-#         raise SystemExit(f"Error monitoring service: {e}")
-
+    
 def create_agent(jenkins_url, agent_name, headers, auth, remote_fs, label):
     """Create a new Jenkins agent."""
     create_agent_url = f"{jenkins_url}/computer/doCreateItem"
@@ -256,33 +182,118 @@ WantedBy=multi-user.target
     service_file_path = f"/etc/systemd/system/{agent_name}.service"
     
     try:
-        # Write the systemd service file
+
         with open(service_file_path, 'w') as service_file:
             service_file.write(service_content)
-
         # Reload systemd, enable, and start the service
-        subprocess.run(["systemctl", "daemon-reload"], check=True)
-        subprocess.run(["systemctl", "enable", f"{agent_name}.service"], check=True)
-        subprocess.run(["systemctl", "start", f"{agent_name}.service"], check=True)
+        subprocess.run(["sudo", "systemctl", "daemon-reload"], check=True)
+        subprocess.run(["sudo", "systemctl", "enable", f"{agent_name}.service"], check=True)
+        subprocess.run(["sudo", "systemctl", "start", f"{agent_name}.service"], check=True)
         print(f"Jenkins agent '{agent_name}' installed as a Linux service.")
     except Exception as e:
         raise SystemExit(f"Failed to create and start the systemd service: {e}")
-
+    
 def create_windows_service(agent_name, jenkins_url, username, api_token, jar_path, work_dir):
     """Create a Windows service for the Jenkins agent using NSSM and JNLP credentials."""
     service_name = f"{agent_name}_service"
-    nssm_path = "C:\\path\\to\\nssm.exe"  # Update to your NSSM path
-    
+    nssm_path = "C:\\Users\\11549\\Downloads\\nssm\\nssm-2.24\\win64\\nssm.exe"  # Update to your NSSM path
+
+    if not os.path.exists(nssm_path):
+        logging.error(f"NSSM executable not found at {nssm_path}. Please verify the path.")
+        raise SystemExit(f"NSSM executable not found at {nssm_path}. Please verify the path.")
+
     try:
-        # Install and start the Windows service using NSSM
-        subprocess.run([nssm_path, "install", service_name, "java", "-jar", jar_path, 
-                        "-jnlpUrl", f"{jenkins_url}/computer/{agent_name}/jenkins-agent.jnlp", 
-                        "-jnlpCredentials", f"{username}:{api_token}", 
+        # Install the Windows service using NSSM
+        logging.info("Installing Jenkins agent as a Windows service using NSSM...")
+        subprocess.run([nssm_path, "install", service_name, "java", "-jar", jar_path,
+                        "-jnlpUrl", f"{jenkins_url}/computer/{agent_name}/jenkins-agent.jnlp",
+                        "-jnlpCredentials", f"{username}:{api_token}",
                         "-workDir", work_dir], check=True)
+        
+        
+        logging.info(f"Setting service '{service_name}' to auto-start...")
+        subprocess.run([nssm_path, 'set', service_name, 'Start', 'SERVICE_AUTO_START'], check=True)
+        logging.info(f"Successfully set service '{service_name}' to auto-start.")
+        
+        # Start the service
+        logging.info(f"Starting the Windows service '{service_name}'...")
         subprocess.run([nssm_path, "start", service_name], check=True)
-        print(f"Jenkins agent '{agent_name}' installed as a Windows service.")
+        logging.info(f"Jenkins agent '{agent_name}' installed and started as a Windows service.")
+    
+    except subprocess.CalledProcessError as e:
+        logging.error(f"Failed to install or start the Windows service: {e}")
+        raise SystemExit(f"Failed to install or start the Windows service: {e}")
+
+
+def send_email(subject, body):
+    """Send an email alert."""
+    email_from = os.getenv('EMAIL_FROM')
+    email_to = os.getenv('EMAIL_TO')
+    smtp_server = os.getenv('SMTP_SERVER')
+    smtp_port = int(os.getenv('SMTP_PORT'))
+    smtp_user = os.getenv('SMTP_USER')
+    smtp_password = os.getenv('SMTP_PASSWORD')
+
+    msg = MIMEMultipart()
+    msg['From'] = email_from
+    msg['To'] = email_to
+    msg['Subject'] = subject
+
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.starttls()
+        server.login(smtp_user, smtp_password)
+        server.sendmail(email_from, email_to, msg.as_string())
+        server.quit()
+        print(f"Alert email sent to {email_to}")
     except Exception as e:
-        raise SystemExit(f"Failed to create and start the Windows service: {e}")
+        logging.error(f"Failed to send email alert: {e}")
+        raise SystemExit(f"Error sending email: {e}")
+
+    
+def monitor_service(agent_name):
+    """Continuously monitor Jenkins agent service and send email if service fails."""
+    current_platform = platform.system()
+    service_status_cmd = []
+    try:
+        while True:
+            if current_platform == "Linux":
+                service_status_cmd = ["sudo" ,"systemctl", "is-active", f"{agent_name}.service"]
+                result = subprocess.run(service_status_cmd, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                if result.returncode == 0 and "active" in result.stdout.strip():
+                    logging.info(f"The Jenkins agent service '{agent_name}' is running normally.")
+                    print(f"The Jenkins agent service '{agent_name}' is running normally.")
+                else:
+                    logging.error(f"{agent_name} service is down! Status: {result.stdout.strip()}")
+                    print(f"{agent_name} service is down! Status: {result.stdout.strip()}")
+                    subject = f"Service Failure: {agent_name}"
+                    body = f"The Jenkins agent service '{agent_name}' has failed or stopped unexpectedly."
+                    send_email(subject, body)
+
+            elif current_platform == "Windows":
+                service_status_cmd = ["sc", "query", f"{agent_name}_service"]
+                result = subprocess.run(service_status_cmd,text=True, check=True, encoding='ISO-8859-1',stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+                if "RUNNING" not in result.stdout:
+                    logging.error(f"{agent_name} service is down! Status: {result.stdout.strip()}")
+                    print(f"{agent_name} service is down! Status: {result.stdout.strip()}")
+                    subject = f"Service Failure: {agent_name}"
+                    body = f"The Jenkins agent service '{agent_name}' has failed or stopped unexpectedly."
+                    send_email(subject, body)
+                else:
+                    logging.info(f"The Jenkins agent service '{agent_name}' is running normally.")
+                    print(f"The Jenkins agent service '{agent_name}' is running normally.")
+
+            else:
+                logging.info(f"The current_platform '{current_platform}' is not supported.")
+                logging.info(f"The current_platform '{current_platform}' is not supported.")
+            
+            time.sleep(20)  # Wait for the specified interval before checking again
+    except Exception as e:
+        logging.error(f"Failed to monitor the service: {e}")
+        raise SystemExit(f"Error monitoring service: {e}")
+
 
 def main():
     """Main entry point for the script."""
@@ -307,8 +318,6 @@ def main():
         # Step 5: Monitor the service and send an email if it fails
 
         monitor_service(args.agent_name)
-
-        print("line 283")
 
     except KeyboardInterrupt:
         logging.error("Script interrupted by user.")
